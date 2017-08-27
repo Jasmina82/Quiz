@@ -14,8 +14,9 @@ public class AdminDAOImplementation implements AdminDAO {
 	@Override
 	public void addQuestion(Question question) {
 
-		Connection conn = ConnectionManager.getInstance().getConnection();
-		try (Statement stmt = conn.createStatement()) {
+		
+		try (Connection conn = ConnectionManager.getInstance().getConnection();
+				Statement stmt = conn.createStatement()) {
 
 			stmt.executeUpdate(
 					"INSERT INTO questions (question,correctAnswer,wrongAnswer1,wrongAnswer2,wrongAnswer3)  VALUES('"

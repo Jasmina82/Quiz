@@ -21,12 +21,13 @@ public class LoginHandler {
 		boolean userExists = validateUser(username);
 
 		if (!userExists) {
-			System.out.println("Username dosn't exists! ");
+			System.out.println("Username doesn't exists! ");
 			login();
 		}
 
 		String password = InputHandler.userInput("Enter password:");
 
+		// admin's login
 		if (username.equals("jasmina") && password.equals("1122"))
 			AdminMenuHandler.adminMenu();
 
@@ -47,6 +48,7 @@ public class LoginHandler {
 
 		boolean userExists = validateUserForRegister(username);
 
+		// if username exists return to the main menu
 		if (userExists) {
 			System.out.println("Username already exists! ");
 			AplicationHelper.startApp();
@@ -55,8 +57,10 @@ public class LoginHandler {
 		// create password
 		int password = (int) (1000 + (Math.random() * 999));
 
+		// create new object
 		UserProfile newUser = new UserProfile(username, password + "");
 
+		// enter new username into the db , print username and password,print menu
 		userDao.register(newUser);
 		System.out.println(newUser.toString());
 		UserMenuHandler.userMenu(newUser);
@@ -67,6 +71,7 @@ public class LoginHandler {
 		return users.containsKey(username);
 	}
 
+	// reason for second method for validating username: MySQL is case insensitive
 	public static <K> boolean validateUserForRegister(String username) {
 		Set<String> keys = users.keySet();
 

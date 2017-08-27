@@ -40,7 +40,7 @@ public class AdminMenuHandler {
 	public static void addQuestion() {
 
 		String question = InputHandler.userInput("Enter question:");
-		String correctAnswer = InputHandler.userInput("Enter correctAnswer:");
+		String correctAnswer = InputHandler.userInput("Enter correct answer:");
 		String wrongAnswer1 = InputHandler.userInput("Enter wrong answer one:");
 		String wrongAnswer2 = InputHandler.userInput("Enter wrong answer two:");
 		String wrongAnswer3 = InputHandler.userInput("Enter wrong answer three:");
@@ -65,6 +65,7 @@ public class AdminMenuHandler {
 
 		int questionRow = InputHandler.getUserInput(questions.size() + 1);
 
+		// there is 25 questions in the menu list,last option, 26 is exit
 		if (questionRow == (questions.size() + 1))
 			adminMenu();
 
@@ -73,7 +74,7 @@ public class AdminMenuHandler {
 
 	public static void handleQuestionEdit(Question question, int row) {
 
-		// new Question object for editing
+		// create new Question object, for editing
 		Question editedQuestion = new Question(question.getQuestion(), question.getCorrectAnswer(),
 				question.getWrongAnswer1(), question.getWrongAnswer2(), question.getWrongAnswer3());
 
@@ -81,8 +82,10 @@ public class AdminMenuHandler {
 		int changeTime = 0;
 		String adminCorrection = "";
 
+		// while option isn't exit
 		while (adminOption != 6) {
 
+			// print menu with question's element for editing
 			System.out.println(editedQuestion.toString());
 			System.out.println("6.Exit menu\n");
 			adminOption = InputHandler.getUserInput(6);
@@ -116,6 +119,7 @@ public class AdminMenuHandler {
 			}
 		}
 
+		// if user has changed the question,edit question in the db
 		if (changeTime > 1)
 			admin.editQuestion(editedQuestion, row);
 

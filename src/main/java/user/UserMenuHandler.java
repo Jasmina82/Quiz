@@ -38,7 +38,6 @@ public class UserMenuHandler {
 			getHighscores(user);
 			break;
 		case 4:
-	
 			AplicationHelper.startApp();
 		}
 	}
@@ -46,6 +45,7 @@ public class UserMenuHandler {
 	public static void play(UserProfile user) {
 
 		AdminDAOImplementation manager = new AdminDAOImplementation();
+		// get all questions from db
 		List<Question> questions = manager.getAllQuestions();
 
 		System.out.println("Enter correct answer.Good luck!\n");
@@ -53,6 +53,7 @@ public class UserMenuHandler {
 
 		for (int i = 0; i < 25; i++) {
 
+			// get all answers for the question
 			List<String> answers = questions.get(i).getAnswers();
 
 			// print question
@@ -61,7 +62,9 @@ public class UserMenuHandler {
 			handleAnswer(answers, questions.get(i).getCorrectAnswer());
 		}
 
+		// print users points
 		System.out.println(game.toString() + "\n");
+		// enter the result into the table
 		userDao.recordPlay(user.getUsername(), game.getPoints());
 		userMenu(user);
 	}
@@ -76,7 +79,7 @@ public class UserMenuHandler {
 
 		// get user's answer
 		int userAnswer = InputHandler.getUserInput(4);
-		
+
 		System.out.println("Correct answer : " + correctAnswer + "\n");
 
 		// check if user's answer is correct
@@ -87,24 +90,26 @@ public class UserMenuHandler {
 			game.plusWrong();
 	}
 
+	// print all user's scores
 	public static void gameHistory(UserProfile user) {
-		List<String> highscores = userDao.getGameHistory(user.getUsername());
+		List<String> usersGame = userDao.getGameHistory(user.getUsername());
 
 		System.out.println("Your game history : ");
 
-		for (String e : highscores) {
+		for (String e : usersGame) {
 			System.out.println(e);
 		}
 		System.out.println();
 		userMenu(user);
 	}
 
+	// print first 100 users with the highest scores
 	public static void getHighscores(UserProfile user) {
 		List<String> highscores = userDao.getHighscoresList();
 
 		System.out.println("All players highscores: ");
 
-		int counter=1;
+		int counter = 1;
 		for (String e : highscores) {
 			System.out.println(counter + "." + e);
 			counter++;
